@@ -1,13 +1,15 @@
 import { Component, ErrorInfo } from 'react';
 
-type IProps = {
+interface IProps {
   children?: React.ReactNode;
 };
-type IState = {
+
+interface IState {
   hasError: boolean;
   error: null | Error;
   errorInfo: null | ErrorInfo;
 };
+
 export default class ErrorBoundary extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
