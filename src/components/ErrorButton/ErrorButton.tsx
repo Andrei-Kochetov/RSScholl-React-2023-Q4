@@ -1,14 +1,18 @@
-import { useState } from 'react';
 import styles from './ErrorButton.module.css';
+import { Component } from 'react';
 
-export default function ErrorButton() {
-  const [hasError, setHasError] = useState(false);
-  if (hasError) {
-    throw new Error('Error');
+export default class ErrorButton extends Component {
+  state = { hasError: false };
+
+  render() {
+    const { hasError } = this.state;
+    if (hasError) {
+      throw new Error('Custom error');
+    }
+    return (
+      <button onClick={() => this.setState({ hasError: true })} className={styles['error-button']}>
+        Error button
+      </button>
+    );
   }
-  return (
-    <button onClick={() => setHasError(true)} className={styles['error-button']}>
-      Error button
-    </button>
-  );
 }
