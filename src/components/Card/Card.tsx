@@ -1,6 +1,12 @@
 import styles from './Card.module.css';
 
-export default function Card({ name, model, manufacturer }: Record<string, string>) {
+interface ICardProps {
+  name: string;
+  model: string;
+  manufacturer: string;
+}
+
+export default function Card({ name, model, manufacturer }: ICardProps) {
   return (
     <div className={styles.card}>
       <h2>{name}</h2>

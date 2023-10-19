@@ -6,7 +6,6 @@ import Card from './components/Card/Card';
 import ErrorBoundary from './components/ErrorBoundary';
 import ErrorButton from './components/ErrorButton/ErrorButton';
 
-
 export default function App() {
   const LSSearchValue: string | null = localStorage.getItem('queryString');
   const initSearchString: string = LSSearchValue ? LSSearchValue : '';
