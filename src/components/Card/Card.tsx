@@ -7,9 +7,9 @@ interface ICardProps {
   manufacturer: string;
 }
 
-export default class Card extends Component <ICardProps> {
-  constructor(props: ICardProps){
-    super(props)
+export default class Card extends Component<ICardProps> {
+  constructor(props: ICardProps) {
+    super(props);
   }
   render() {
     return (
