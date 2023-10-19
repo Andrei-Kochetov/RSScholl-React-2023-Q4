@@ -5,5 +5,9 @@ export default function ErrorButton() {
   if (hasError) {
     throw new Error('Error');
   }
-  return <button onClick={() => setHasError(true)} className={styles['error-button']}>Error button</button>;
+  return (
+    <button onClick={() => setHasError(true)} className={styles['error-button']}>
+      Error button
+    </button>
+  );
 }
