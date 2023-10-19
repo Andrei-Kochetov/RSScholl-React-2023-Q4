@@ -9,8 +9,7 @@
 }
 .cards-wrapper{
   display: flex;
-  column-gap: 10px;
-  row-gap: 10px;
+  gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
 }
