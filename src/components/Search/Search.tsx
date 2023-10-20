@@ -12,8 +12,10 @@ export default class Search extends Component<ISearchString> {
   constructor(props: ISearchString) {
     super(props);
   }
+
   render() {
     const { searchString, setSearchString, searchStringQuery } = this.props;
+
     return (
       <div className={styles['search-section']}>
         <input
