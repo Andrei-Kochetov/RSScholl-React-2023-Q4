@@ -33,7 +33,7 @@ export default class App extends Component {
     fetch(`https://swapi.dev/api/starships/?search=${stringQuery}`)
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ cards: data.results, searchString, isLoading: false });
+        this.setState({ cards: data.results, searchString: stringQuery, isLoading: false });
       });
   }
 

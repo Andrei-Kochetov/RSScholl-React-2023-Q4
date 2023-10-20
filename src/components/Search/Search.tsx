@@ -28,7 +28,11 @@ export default class Search extends Component<ISearchString> {
           onChange={(e) => setSearchString(e.target.value)}
           onKeyUp={(e) => e.code === 'Enter' && searchStringQuery(searchString)}
         ></input>
-        <button className={styles['search-button']} onClick={() => searchStringQuery(searchString)} disabled={disabled}>
+        <button
+          className={styles['search-button']}
+          onClick={() => searchStringQuery(searchString)}
+          disabled={disabled}
+        >
           <BiSearchAlt className={styles['search-icon']}></BiSearchAlt>
         </button>
       </div>
