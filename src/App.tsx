@@ -52,6 +52,7 @@ export default class App extends Component {
           searchString={searchString}
           setSearchString={(e) => this.bindSetState({ searchString: e, cards, isLoading })}
           searchStringQuery={this.bindSearchStringQuery}
+          disabled={this.state.isLoading}
         ></Seacrh>
 
         <ErrorButton></ErrorButton>

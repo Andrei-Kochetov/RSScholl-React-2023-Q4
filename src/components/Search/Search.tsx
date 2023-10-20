@@ -6,6 +6,7 @@ interface ISearchString {
   searchString: string;
   setSearchString(searchString: string): void;
   searchStringQuery(searchString: string): void;
+  disabled: boolean;
 }
 
 export default class Search extends Component<ISearchString> {
@@ -14,7 +15,7 @@ export default class Search extends Component<ISearchString> {
   }
 
   render() {
-    const { searchString, setSearchString, searchStringQuery } = this.props;
+    const { searchString, setSearchString, searchStringQuery, disabled } = this.props;
 
     return (
       <div className={styles['search-section']}>
@@ -23,10 +24,11 @@ export default class Search extends Component<ISearchString> {
           className={styles['search-input']}
           value={searchString}
           placeholder="enter your request"
+          disabled={disabled}
           onChange={(e) => setSearchString(e.target.value)}
           onKeyUp={(e) => e.code === 'Enter' && searchStringQuery(searchString)}
         ></input>
-        <button className={styles['search-button']} onClick={() => searchStringQuery(searchString)}>
+        <button className={styles['search-button']} onClick={() => searchStringQuery(searchString)} disabled={disabled}>
           <BiSearchAlt className={styles['search-icon']}></BiSearchAlt>
         </button>
       </div>
