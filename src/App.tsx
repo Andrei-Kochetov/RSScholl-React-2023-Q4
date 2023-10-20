@@ -47,32 +47,31 @@ export default class App extends Component {
   render() {
     const { isLoading, cards, searchString } = this.state;
     return (
-      <>
+      <ErrorBoundary>
         <Seacrh
           searchString={searchString}
           setSearchString={(e) => this.bindSetState({ searchString: e, cards, isLoading })}
           searchStringQuery={this.bindSearchStringQuery}
         ></Seacrh>
-        <ErrorBoundary>
-          <ErrorButton></ErrorButton>
-          <div className="cards-wrapper">
-            {isLoading && <Spinner></Spinner>}
-            {!isLoading &&
-              (cards.length ? (
-                cards.map((card) => (
-                  <Card
-                    name={card.name}
-                    model={card.model}
-                    manufacturer={card.manufacturer}
-                    key={card.created}
-                  ></Card>
-                ))
-              ) : (
-                <h3 className="title">Unfortunately, no suitable result was found</h3>
-              ))}
-          </div>
-        </ErrorBoundary>
-      </>
+
+        <ErrorButton></ErrorButton>
+        <div className="cards-wrapper">
+          {isLoading && <Spinner></Spinner>}
+          {!isLoading &&
+            (cards.length ? (
+              cards.map((card) => (
+                <Card
+                  name={card.name}
+                  model={card.model}
+                  manufacturer={card.manufacturer}
+                  key={card.created}
+                ></Card>
+              ))
+            ) : (
+              <h3 className="title">Unfortunately, no suitable result was found</h3>
+            ))}
+        </div>
+      </ErrorBoundary>
     );
   }
 }

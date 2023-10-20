@@ -30,7 +30,7 @@ export default class ErrorBoundary extends Component<IProps, IState> {
 
   render() {
     if (this.state.hasError) {
-      return <h2 className='title'>An unexpected error has occurred, please reload the page.</h2>;
+      return <h2 className="title">An unexpected error has occurred, please reload the page.</h2>;
     }
 
     return this.props.children;
