@@ -1,5 +1,5 @@
 import styles from './Search.module.css';
-import { BiSearchAlt } from 'react-icons/bi';
+import searchIcon from '../../assets/search.png'
 import { Component } from 'react';
 
 interface ISearchString {
@@ -15,7 +15,8 @@ export default class Search extends Component<ISearchString> {
   }
 
   render() {
-    const { searchString, setSearchString, searchStringQuery, disabled } = this.props;
+    const { searchString, setSearchString, searchStringQuery, disabled } =
+      this.props;
 
     return (
       <div className={styles['search-section']}>
@@ -33,7 +34,7 @@ export default class Search extends Component<ISearchString> {
           onClick={() => searchStringQuery(searchString)}
           disabled={disabled}
         >
-          <BiSearchAlt className={styles['search-icon']}></BiSearchAlt>
+          <img className={styles['search-icon']} src={searchIcon} alt='search icon'></img>
         </button>
       </div>
     );

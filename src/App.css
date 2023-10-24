@@ -7,13 +7,13 @@
   justify-content: center;
   flex-direction: column;
 }
-.cards-wrapper{
+.cards-wrapper {
   display: flex;
   gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.title{
+.title {
   font-size: 2.8rem;
 }

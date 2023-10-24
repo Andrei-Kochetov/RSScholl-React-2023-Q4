@@ -1,23 +1,23 @@
-.card{
-    width: 150px;
-    min-height: 200px;
-    border: 1px solid silver;
-    border-radius: 8px;
-    transition: 0.5s all;
+.card {
+  width: 150px;
+  min-height: 200px;
+  border: 1px solid silver;
+  border-radius: 8px;
+  transition: 0.5s all;
 }
-.card:hover{
-    scale: 1.05;
-    box-shadow: 0 0 10px silver;
+.card:hover {
+  scale: 1.05;
+  box-shadow: 0 0 10px silver;
 }
-.card h2{
-    padding: 5px;
-    font-size: 2rem;
-    color:black;
-    margin-bottom: 10px;
+.card h2 {
+  padding: 5px;
+  font-size: 2rem;
+  color: black;
+  margin-bottom: 10px;
 }
-.card h4{
-    padding-left: 5px;
-    text-align: start;
-    font-size: 1.4rem;
-    color: rgb(114, 114, 114)
+.card h4 {
+  padding-left: 5px;
+  text-align: start;
+  font-size: 1.4rem;
+  color: rgb(114, 114, 114);
 }

@@ -10,7 +10,10 @@ export default class ErrorButton extends Component {
       throw new Error('Custom error');
     }
     return (
-      <button onClick={() => this.setState({ hasError: true })} className={styles['error-button']}>
+      <button
+        onClick={() => this.setState({ hasError: true })}
+        className={styles['error-button']}
+      >
         Error button
       </button>
     );

@@ -13,8 +13,16 @@ interface IState {
 }
 
 export default class App extends Component {
-  LSSearchValue: string | null = localStorage.getItem('queryString');
-  initSearchString: string = this.LSSearchValue ? this.LSSearchValue : '';
+  localStorageSearchValue: string | null = localStorage.getItem('queryString');
+  initSearchString: string = this.localStorageSearchValue
+    ? this.localStorageSearchValue
+    : '';
+
+  constructor(props: Record<string, never>) {
+    super(props);
+    this.searchStringQuery = this.searchStringQuery.bind(this);
+    this.setState = this.setState.bind(this);
+  }
 
   state: IState = {
     cards: [],
@@ -33,16 +41,18 @@ export default class App extends Component {
     fetch(`https://swapi.dev/api/starships/?search=${stringQuery}`)
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ cards: data.results, searchString: stringQuery, isLoading: false });
-      });
+        this.setState({
+          cards: data.results,
+          searchString: stringQuery,
+          isLoading: false,
+        });
+      })
+      .catch((error) => console.log(error));
   }
 
   componentDidMount() {
     this.searchStringQuery(this.state.searchString);
   }
-
-  bindSearchStringQuery = this.searchStringQuery.bind(this);
-  bindSetState = this.setState.bind(this);
 
   render() {
     const { isLoading, cards, searchString } = this.state;
@@ -50,12 +60,13 @@ export default class App extends Component {
       <ErrorBoundary>
         <Seacrh
           searchString={searchString}
-          setSearchString={(e) => this.bindSetState({ searchString: e, cards, isLoading })}
-          searchStringQuery={this.bindSearchStringQuery}
+          setSearchString={(e) =>
+            this.setState({ searchString: e, cards, isLoading })
+          }
+          searchStringQuery={this.searchStringQuery}
           disabled={this.state.isLoading}
         ></Seacrh>
-
-        <ErrorButton></ErrorButton>
+        <ErrorButton />
         <div className="cards-wrapper">
           {isLoading && <Spinner></Spinner>}
           {!isLoading &&
@@ -69,7 +80,9 @@ export default class App extends Component {
                 ></Card>
               ))
             ) : (
-              <h3 className="title">Unfortunately, no suitable result was found</h3>
+              <h3 className="title">
+                Unfortunately, no suitable result was found
+              </h3>
             ))}
         </div>
       </ErrorBoundary>
