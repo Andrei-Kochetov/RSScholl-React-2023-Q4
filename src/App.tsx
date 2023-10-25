@@ -5,6 +5,7 @@ import Card from './components/Card/Card';
 import Spinner from './components/Spinner';
 import ErrorBoundary from './components/ErrorBoundary';
 import ErrorButton from './components/ErrorButton/ErrorButton';
+//import { arrayNums } from './data/arrayNumsFrom1To100';
 
 interface IState {
   cards: Record<string, string>[];
@@ -21,7 +22,7 @@ export default class App extends Component {
   constructor(props: Record<string, never>) {
     super(props);
     this.searchStringQuery = this.searchStringQuery.bind(this);
-    this.setState = this.setState.bind(this);
+    this.changeStateSearchString = this.changeStateSearchString.bind(this);
   }
 
   state: IState = {
@@ -29,6 +30,11 @@ export default class App extends Component {
     searchString: this.initSearchString,
     isLoading: true,
   };
+
+  changeStateSearchString(newSearchString: string) {
+    const { isLoading, cards } = this.state;
+    this.setState({ searchString: newSearchString, cards, isLoading });
+  }
 
   searchStringQuery(stringQuery: string) {
     const { cards, searchString } = this.state;
@@ -38,7 +44,7 @@ export default class App extends Component {
     stringQuery = stringQuery.trim();
     localStorage.setItem('queryString', stringQuery);
 
-    fetch(`https://swapi.dev/api/starships/?search=${stringQuery}`)
+    fetch(`https://rickandmortyapi.com/api/character/?name=${stringQuery}`)
       .then((response) => response.json())
       .then((data) => {
         this.setState({
@@ -56,27 +62,28 @@ export default class App extends Component {
 
   render() {
     const { isLoading, cards, searchString } = this.state;
+    console.log(cards)
     return (
       <ErrorBoundary>
         <Seacrh
           searchString={searchString}
-          setSearchString={(e) =>
-            this.setState({ searchString: e, cards, isLoading })
-          }
+          setSearchString={this.changeStateSearchString}
           searchStringQuery={this.searchStringQuery}
           disabled={this.state.isLoading}
         ></Seacrh>
         <ErrorButton />
         <div className="cards-wrapper">
-          {isLoading && <Spinner></Spinner>}
+          {isLoading && <Spinner />}
           {!isLoading &&
-            (cards.length ? (
+            (!!cards.length ? (
               cards.map((card) => (
                 <Card
+                  img={card.image}
                   name={card.name}
-                  model={card.model}
-                  manufacturer={card.manufacturer}
-                  key={card.created}
+                  species={card.species}
+                  gender={card.gender}
+                  status={card.status}
+                  key={card.id}
                 ></Card>
               ))
             ) : (
