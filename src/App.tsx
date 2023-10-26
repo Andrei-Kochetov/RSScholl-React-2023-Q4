@@ -5,7 +5,6 @@ import Card from './components/Card/Card';
 import Spinner from './components/Spinner';
 import ErrorBoundary from './components/ErrorBoundary';
 import ErrorButton from './components/ErrorButton/ErrorButton';
-//import { arrayNums } from './data/arrayNumsFrom1To100';
 
 interface IState {
   cards: Record<string, string>[];
@@ -18,6 +17,7 @@ export default class App extends Component {
   initSearchString: string = this.localStorageSearchValue
     ? this.localStorageSearchValue
     : '';
+  arrayNumsFrom1To100: number[] = Array.from({ length: 100 }, (_, i) => i + 1);
 
   constructor(props: Record<string, never>) {
     super(props);
@@ -44,11 +44,17 @@ export default class App extends Component {
     stringQuery = stringQuery.trim();
     localStorage.setItem('queryString', stringQuery);
 
-    fetch(`https://rickandmortyapi.com/api/character/?name=${stringQuery}`)
+    fetch(
+      `https://rickandmortyapi.com/api/character/${
+        stringQuery === ''
+          ? `${this.arrayNumsFrom1To100}`
+          : `?name=${stringQuery}`
+      }`
+    )
       .then((response) => response.json())
       .then((data) => {
         this.setState({
-          cards: data.results,
+          cards: data.results ? data.results : data,
           searchString: stringQuery,
           isLoading: false,
         });
@@ -62,7 +68,6 @@ export default class App extends Component {
 
   render() {
     const { isLoading, cards, searchString } = this.state;
-    console.log(cards)
     return (
       <ErrorBoundary>
         <Seacrh
@@ -75,7 +80,7 @@ export default class App extends Component {
         <div className="cards-wrapper">
           {isLoading && <Spinner />}
           {!isLoading &&
-            (!!cards.length ? (
+            (cards.length ? (
               cards.map((card) => (
                 <Card
                   img={card.image}

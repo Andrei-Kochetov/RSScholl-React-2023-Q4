@@ -16,11 +16,11 @@ export default class Card extends Component<ICardProps> {
   render() {
     return (
       <div className={styles.card}>
-        <img src={this.props.img} alt='image character'></img>
+        <img src={this.props.img} alt="image character"></img>
         <h2>{this.props.name}</h2>
-        <h4>{'species: ' + this.props.species}</h4>
-        <h4>{'gender: ' + this.props.gender}</h4>
-        <h4>{'status: ' + this.props.status}</h4>
+        <h4>{`species: ${this.props.species}`}</h4>
+        <h4>{`gender: ${this.props.gender}`}</h4>
+        <h4>{`status: ${this.props.status}`}</h4>
       </div>
     );
   }

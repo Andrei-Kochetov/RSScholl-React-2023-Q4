@@ -15,10 +15,7 @@ export default class ErrorButton extends Component {
     }
 
     return (
-      <button
-        onClick={this.handlerClick}
-        className={styles['error-button']}
-      >
+      <button onClick={this.handlerClick} className={styles['error-button']}>
         Error button
       </button>
     );
