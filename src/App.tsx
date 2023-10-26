@@ -33,17 +33,27 @@ export default function App() {
         stringQuery === '' ? `` : `?name=${stringQuery}`
       }`
     )
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Not found results');
+        } else {
+          return response.json();
+        }
+      })
       .then((data) => {
         setCards(data.results);
         setSearchString(stringQuery);
         setIsLoading(false);
-        setCurrentPage(1)
+        setCurrentPage(1);
         setAllPage(data.info.pages);
         setLinkPrevPage(data.info.prev);
         setLinkNextPage(data.info.next);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        setCards([]);
+        setIsLoading(false);
+      });
   }
 
   function goToNextPage() {
@@ -56,7 +66,7 @@ export default function App() {
         setIsLoading(false);
         setLinkPrevPage(data.info.prev);
         setLinkNextPage(data.info.next);
-        setCurrentPage( currentPage + 1)
+        setCurrentPage(currentPage + 1);
       })
       .catch((error) => console.log(error));
   }
@@ -71,7 +81,7 @@ export default function App() {
         setIsLoading(false);
         setLinkPrevPage(data.info.prev);
         setLinkNextPage(data.info.next);
-        setCurrentPage( currentPage - 1)
+        setCurrentPage(currentPage - 1);
       })
       .catch((error) => console.log(error));
   }
@@ -115,8 +125,13 @@ export default function App() {
             </h3>
           ))}
       </div>
-      {!isLoading && cards.length && (
-        <Pagination allPage={allPage} currentPage={currentPage} goToNextPage={goToNextPage} goToPrevPage={goToPrevPage}></Pagination>
+      {!isLoading && Boolean(cards.length) && (
+        <Pagination
+          allPage={allPage}
+          currentPage={currentPage}
+          goToNextPage={goToNextPage}
+          goToPrevPage={goToPrevPage}
+        ></Pagination>
       )}
     </ErrorBoundary>
   );

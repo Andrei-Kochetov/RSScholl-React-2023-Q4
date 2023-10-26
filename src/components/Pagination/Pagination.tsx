@@ -18,7 +18,7 @@ export default function Pagination({
       <button
         className="pagination-button"
         onClick={goToPrevPage}
-        disabled={ currentPage === 1 }
+        disabled={currentPage === 1}
       >{`<`}</button>
       <h4 className="pagination-page">
         {currentPage} / {allPage ? allPage : currentPage}
@@ -26,7 +26,7 @@ export default function Pagination({
       <button
         className="pagination-button"
         onClick={goToNextPage}
-        disabled={ currentPage === allPage}
+        disabled={currentPage === allPage}
       >{`>`}</button>
     </div>
   );
