@@ -33,8 +33,19 @@
   display: block;
   margin: 0 auto;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .modal-card.modal-card-active {
   transform: scale(1);
+}
+
+.modal-close-button{
+  font-size: 24px;
+  color: red;
+  position: fixed;
+  top: 0px;
+  right: -40px;
+  cursor: pointer;
+
 }
