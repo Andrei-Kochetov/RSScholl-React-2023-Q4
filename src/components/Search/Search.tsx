@@ -29,7 +29,7 @@ export default function Search({
   return (
     <div className={styles['search-section']}>
       <input
-        type="text"
+        type="search"
         className={styles['search-input']}
         value={searchString}
         placeholder="search by name"
