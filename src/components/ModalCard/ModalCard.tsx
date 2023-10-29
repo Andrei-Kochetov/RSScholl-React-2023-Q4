@@ -5,7 +5,7 @@ interface IModalCardProps {
   modalActive: boolean;
   setModalActive(newState: boolean): void;
   deleteCardStringQuery(): void;
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function ModalCard({
