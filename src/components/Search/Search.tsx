@@ -4,22 +4,22 @@ import searchIcon from '../../assets/search.png';
 interface ISearchString {
   searchString: string;
   setSearchString(searchString: string): void;
-  searchStringQuery(searchString: string): void;
+  newSearch(searchString: string): void;
   disabled: boolean;
 }
 
 export default function Search({
   searchString,
   setSearchString,
-  searchStringQuery,
+  newSearch,
   disabled,
 }: ISearchString) {
   function handlerKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
-    return event.code === 'Enter' && searchStringQuery(searchString);
+    return event.code === 'Enter' && newSearch(searchString);
   }
 
   function handlerClick() {
-    searchStringQuery(searchString);
+    newSearch(searchString);
   }
 
   function handlerChange(event: React.ChangeEvent<HTMLInputElement>) {
