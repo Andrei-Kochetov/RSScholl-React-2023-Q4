@@ -2,15 +2,16 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
 import Seacrh from './components/Search/Search';
-import Card from './components/Card/Card';
-import Spinner from './components/Spinner';
 import ErrorBoundary from './components/ErrorBoundary';
 import ErrorButton from './components/ErrorButton/ErrorButton';
 import Pagination from './components/Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
 import ModalCard from './components/ModalCard/ModalCard';
+import { Context } from './context';
+import CardsSection from './components/CardsSection/CardsSection';
+import ModalCardContent from './components/ModalCard/ModalCardContent/ModalCardContent';
 
-interface ICardDescription {
+export interface ICardDescription {
   id: number;
   name: string;
   status: string;
@@ -34,8 +35,8 @@ export default function App() {
   const initSearchCard: string = SearchCard ? SearchCard : '';
 
   const [searchString, setSearchString] = useState(initSearchString);
-  const [currentPage, setCurrentPage] = useState(+initSearchPage);
   const [cards, setCards] = useState<Record<string, string>[]>([]);
+  const [currentPage, setCurrentPage] = useState(+initSearchPage);
   const [isLoading, setIsLoading] = useState(true);
   const [allPage, setAllPage] = useState(1);
   const [linkPrevPage, setLinkPrevPage] = useState(null);
@@ -201,44 +202,25 @@ export default function App() {
         <Route
           path="/"
           element={
-            <>
+            <Context.Provider value={{ cards, searchString, cardDescription }}>
               <Seacrh
-                searchString={searchString}
                 setSearchString={changeStateSearchString}
                 newSearch={newSearch}
                 disabled={isLoading}
               ></Seacrh>
               <ErrorButton />
-              <div className="cards-wrapper">
-                {isLoading && <Spinner />}
-                {!isLoading &&
-                  (cards.length ? (
-                    cards.map((card) => (
-                      <Card
-                        img={card.image}
-                        name={card.name}
-                        species={card.species}
-                        gender={card.gender}
-                        status={card.status}
-                        key={card.id}
-                        id={card.id}
-                        setModalActive={changeStateModalActive}
-                        getCardDescription={getCardDescription}
-                      ></Card>
-                    ))
-                  ) : (
-                    <h3 className="title">
-                      Unfortunately, no suitable result was found
-                    </h3>
-                  ))}
-              </div>
+              <CardsSection
+                isLoading={isLoading}
+                changeStateModalActive={changeStateModalActive}
+                getCardDescription={getCardDescription}
+              />
               {!isLoading && Boolean(cards.length) && (
                 <Pagination
                   allPage={allPage}
                   currentPage={currentPage}
                   goToNextPage={goToNextPage}
                   goToPrevPage={goToPrevPage}
-                ></Pagination>
+                />
               )}
               {
                 <ModalCard
@@ -249,35 +231,12 @@ export default function App() {
                   <Outlet />
                 </ModalCard>
               }
-            </>
+            </Context.Provider>
           }
         >
           <Route
             index
-            element={
-              <>
-                {isModalLoading && <Spinner />}
-                {!isModalLoading && (
-                  <>
-                    {cardDescription.id ? (
-                      <>
-                        <img
-                          src={cardDescription.image}
-                          alt="image character"
-                        ></img>
-                        <h4>{`name: ${cardDescription.name}`}</h4>
-                        <h4>{`status: ${cardDescription.status}`}</h4>
-                        <h4>{`species: ${cardDescription.species}`}</h4>
-                        <h4>{`gender: ${cardDescription.gender}`}</h4>
-                        <h4>{`location: ${cardDescription.location.name}`}</h4>
-                      </>
-                    ) : (
-                      <h4>character not found</h4>
-                    )}
-                  </>
-                )}
-              </>
-            }
+            element={<ModalCardContent isModalLoading={isModalLoading} />}
           ></Route>
         </Route>
       </Routes>
