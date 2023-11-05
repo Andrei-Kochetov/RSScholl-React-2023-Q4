@@ -43,9 +43,8 @@ export default function App() {
 
   const [modalActive, setModalActive] = useState(false);
   const [isModalLoading, setIsModalLoading] = useState(false);
-  const [cardDescription, setCardDescription] = useState<ICardDescription>(
-    {} as ICardDescription
-  );
+  const [cardDescription, setCardDescription] =
+    useState<ICardDescription | null>(null);
 
   function initialSearch() {
     setIsLoading(true);
@@ -259,7 +258,7 @@ export default function App() {
                 {isModalLoading && <Spinner />}
                 {!isModalLoading && (
                   <>
-                    {cardDescription.id ? (
+                    {cardDescription?.id ? (
                       <>
                         <img
                           src={cardDescription.image}
