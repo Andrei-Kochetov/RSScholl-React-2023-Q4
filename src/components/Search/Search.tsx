@@ -14,8 +14,7 @@ export default function Search({
   newSearch,
   disabled,
 }: ISearchString) {
-
-  const { searchString } = useContext(Context)
+  const { searchString } = useContext(Context);
 
   function handlerKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
     return event.code === 'Enter' && newSearch(searchString);

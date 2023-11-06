@@ -4,9 +4,11 @@ import { Context } from '../../../context';
 import { useContext } from 'react';
 
 interface IModalCardContetntProps {
-    isModalLoading:boolean
+  isModalLoading: boolean;
 }
-export default function ModalCardContent({isModalLoading} : IModalCardContetntProps) {
+export default function ModalCardContent({
+  isModalLoading,
+}: IModalCardContetntProps) {
   const { cardDescription } = useContext(Context);
 
   return (
