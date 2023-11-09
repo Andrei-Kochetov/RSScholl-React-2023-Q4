@@ -1,11 +1,9 @@
 import './ModalCardContent.css';
-import Spinner from '../../Spinner';
-import { Context } from '../../../context';
+import Spinner from '../../Spinner/Spinner';
+import { Context } from '../../../context/context';
 import { useContext } from 'react';
+import { IModalCardContetntProps } from '../../../types/interfaces';
 
-interface IModalCardContetntProps {
-  isModalLoading: boolean;
-}
 export default function ModalCardContent({
   isModalLoading,
 }: IModalCardContetntProps) {
@@ -19,7 +17,7 @@ export default function ModalCardContent({
           {cardDescription.id ? (
             <>
               <img src={cardDescription.image} alt="image character"></img>
-              <h4>{`name: ${cardDescription.name}`}</h4>
+              <h4 data-testid="modal-card-content">{`name: ${cardDescription.name}`}</h4>
               <h4>{`status: ${cardDescription.status}`}</h4>
               <h4>{`species: ${cardDescription.species}`}</h4>
               <h4>{`gender: ${cardDescription.gender}`}</h4>
