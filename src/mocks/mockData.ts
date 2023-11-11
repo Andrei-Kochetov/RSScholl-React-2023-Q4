@@ -30,20 +30,3 @@ export const mockCardDescription = {
 };
 
 export const mockSearchString = '';
-
-// export function mockGetCardDescription(cardId: string) {
-//   let isMadeRequest: boolean;
-//    fetch(
-//     `https://rickandmortyapi.com/api/character/${cardId}`
-//   ).then((response) => {
-//     if (response.status) {
-//       isMadeRequest = true
-//     } else {
-//       isMadeRequest = false
-//     }
-//     console.log(response.status, 'status')
-//     return response
-//   }).then(resp=>resp.json())
-//   .then(resp=> console.log(resp, 'resp'));
-
-// }

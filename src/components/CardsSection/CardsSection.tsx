@@ -62,7 +62,7 @@ export default function CardsSection({
               key={card.id}
               id={card.id}
               getCardModalDescription={getCardModalDescription}
-            ></Card>
+            />
           ))
         ) : (
           <NoResultsCards></NoResultsCards>

@@ -21,6 +21,7 @@ export default function Search({ disabled }: ISearchProps) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const newSearch = async (stringQuery: string) => {
+    localStorage.setItem('stringQuery', stringQuery);
     setIsLoading(true);
     stringQuery = stringQuery.trim();
     setSearchParams({ name: stringQuery, page: `1` });
@@ -68,11 +69,13 @@ export default function Search({ disabled }: ISearchProps) {
         disabled={disabled}
         onChange={handlerChange}
         onKeyUp={handlerKeyUp}
+        data-testid={'input-search'}
       ></input>
       <button
         className={styles['search-button']}
         onClick={handlerClick}
         disabled={disabled}
+        data-testid={'input-btn'}
       >
         <img
           className={styles['search-icon']}

@@ -1,61 +1,74 @@
-// import { describe, expect, test, vi } from 'vitest';
-// import { fireEvent, render, screen } from '@testing-library/react';
-// import '@testing-library/jest-dom';
-// import { mockCardDescription, mockSearchString } from '../../mocks/mockData';
-// import { Context } from '../../context/context';
-// import ModalCard from './ModalCard';
-// import { BrowserRouter } from 'react-router-dom';
-// import MainPage from '../pages/MainPage/MainPage';
+import { describe, expect, test, vi } from 'vitest';
+import {
+  act,
+  fireEvent,
+  render,
+  renderHook,
+  screen,
+} from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { mockCardDescription, mockSearchString } from '../../mocks/mockData';
+import { Context } from '../../context/context';
+import ModalCard from './ModalCard';
+import { useState } from 'react';
 
-// const mockFn = vi.fn(() => true);
+const mockFn = vi.fn(() => true);
 
-// const renderModalCard = (isModalLoading: boolean = false) => {
-//   return (
-//     <Context.Provider
-//       value={{
-//         cards: [],
-//         searchString: mockSearchString,
-//         cardDescription: mockCardDescription,
-//       }}
-//     >
-//       <ModalCard
-//         modalActive={true}
-//         isModalLoading={isModalLoading}
-//         deleteCardStringQuery={mockFn}
-//       />
-//     </Context.Provider>
-//   );
-// };
+const { result } = renderHook(() => useState(true));
+const [modalActive, setMockModalActive] = result.current;
 
-// describe('The detailed card:', () => {
-//   test('loading indicator is displayed while fetching data', () => {
-//     render(renderModalCard(true));
+const renderModalCard = (isModalLoading: boolean = false) => {
+  return (
+    <Context.Provider
+      value={{
+        cards: [],
+        searchString: mockSearchString,
+        cardDescription: mockCardDescription,
+        setIsLoading: mockFn,
+        setCards: mockFn,
+        setCurrentPage: mockFn,
+        setAllPage: mockFn,
+        setLinkNextPage: mockFn,
+        setLinkPrevPage: mockFn,
+        setIsModalLoading: mockFn,
+        setCardDescription: mockFn,
+        setModalActive: (newState: boolean) =>
+          act(() => setMockModalActive(newState)),
+        setSearchString: mockFn,
+      }}
+    >
+      <ModalCard
+        modalActive={modalActive}
+        isModalLoading={isModalLoading}
+        deleteCardStringQuery={mockFn}
+      />
+    </Context.Provider>
+  );
+};
 
-//     expect(screen.getByTestId('spinner')).toBeInTheDocument();
-//   });
+describe('The detailed card:', () => {
+  test('clicking the close button hides the component', () => {
+    render(renderModalCard());
 
-//   test('component correctly displays data', () => {
-//     render(renderModalCard());
+    expect(result.current[0]).toBe(true);
+    fireEvent.click(screen.getByTestId('modal-close'));
+    expect(result.current[0]).toBe(false);
+  });
 
-//     expect(screen.getByText(/Morty Smith/i)).toBeInTheDocument();
-//     expect(screen.getByText(/Alive/i)).toBeInTheDocument();
-//     expect(screen.getByText(/Human/i)).toBeInTheDocument();
-//     expect(screen.getByText(/Male/i)).toBeInTheDocument();
-//     expect(screen.getByText(/Citadel of Ricks/i)).toBeInTheDocument();
-//     expect(screen.getByAltText('image character')).toBeInTheDocument();
-//   });
+  test('loading indicator is displayed while fetching data', () => {
+    render(renderModalCard(true));
 
-//   test('clicking the close button hides the component', () => {
-//     render(
-//       //   <BrowserRouter>
-//       //     <MainPage></MainPage>
-//       //   </BrowserRouter>
-//       renderModalCard()
-//     );
-//     screen.debug();
-//     fireEvent.click(screen.getByTestId('modal-close'));
-//     screen.debug();
+    expect(screen.getByTestId('spinner')).toBeInTheDocument();
+  });
 
-//     expect(screen.queryByTestId('modal-card-content')).not.toBeInTheDocument();
-//   });
-// });
+  test('component correctly displays data', () => {
+    render(renderModalCard());
+
+    expect(screen.getByText(/Morty Smith/i)).toBeInTheDocument();
+    expect(screen.getByText(/Alive/i)).toBeInTheDocument();
+    expect(screen.getByText(/Human/i)).toBeInTheDocument();
+    expect(screen.getByText(/Male/i)).toBeInTheDocument();
+    expect(screen.getByText(/Citadel of Ricks/i)).toBeInTheDocument();
+    expect(screen.getByAltText('image character')).toBeInTheDocument();
+  });
+});

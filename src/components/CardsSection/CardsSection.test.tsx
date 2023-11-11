@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import CardsSection from './CardsSection';
 import { Context } from '../../context/context';
@@ -8,32 +8,40 @@ import {
   mockCardDescription,
   mockSearchString,
 } from '../../mocks/mockData';
+import { ICards } from '../../types/interfaces';
+import { BrowserRouter } from 'react-router-dom';
 
 const mockFn = vi.fn();
 
-const renderCardsSectionWithContext = (
-  cardsValueContext: Record<string, string>[]
-) => {
+const renderCardsSection = (cardsValueContext: ICards) => {
   return (
-    <Context.Provider
-      value={{
-        cards: cardsValueContext,
-        searchString: mockSearchString,
-        cardDescription: mockCardDescription,
-      }}
-    >
-      <CardsSection
-        isLoading={false}
-        changeStateModalActive={mockFn}
-        getCardDescription={mockFn}
-      />
-    </Context.Provider>
+    <BrowserRouter>
+      <Context.Provider
+        value={{
+          cards: cardsValueContext,
+          searchString: mockSearchString,
+          cardDescription: mockCardDescription,
+          setIsLoading: mockFn,
+          setCards: mockFn,
+          setCurrentPage: mockFn,
+          setAllPage: mockFn,
+          setLinkNextPage: mockFn,
+          setLinkPrevPage: mockFn,
+          setIsModalLoading: mockFn,
+          setCardDescription: mockFn,
+          setModalActive: mockFn,
+          setSearchString: mockFn,
+        }}
+      >
+        <CardsSection isLoading={false} currentPage={1} />
+      </Context.Provider>
+    </BrowserRouter>
   );
 };
 
 describe('Cards section component:', () => {
   test('displays 2 cards', () => {
-    render(renderCardsSectionWithContext(mockCards));
+    render(renderCardsSection(mockCards));
 
     const renderCards = screen.getAllByTestId('card');
 
@@ -41,10 +49,17 @@ describe('Cards section component:', () => {
   });
 
   test('an empty result message is displayed', () => {
-    render(renderCardsSectionWithContext([]));
+    render(renderCardsSection([]));
 
     expect(
       screen.getByText('Unfortunately, no suitable result was found')
     ).toBeInTheDocument();
+  });
+
+  test('function "getCardDescription" currectly work without errors', async () => {
+    render(renderCardsSection(mockCards));
+    vi.spyOn(global, 'fetch').mockReturnValue(new Promise(() => mockCards));
+    const cards = screen.getAllByTestId('card');
+    fireEvent.click(cards[0]);
   });
 });

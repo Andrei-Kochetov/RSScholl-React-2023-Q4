@@ -27,7 +27,7 @@ export const handlers = [
       // },
     ]);
   }),
-  http.get('https://rickandmortyapi.com/api/character/', () => {
+  http.get('https://rickandmortyapi.com/api/character/*', () => {
     return HttpResponse.json([
       {
         id: 1,

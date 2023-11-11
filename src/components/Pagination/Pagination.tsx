@@ -42,6 +42,7 @@ export default function Pagination({
       console.log(error);
     }
   };
+
   const handleClickPrevPage = () => {
     movePage('prev');
   };
@@ -60,6 +61,7 @@ export default function Pagination({
         }
         onClick={handleClickPrevPage}
         disabled={currentPage === 1}
+        data-testid="button-prev-page"
       >{`<`}</button>
       <h4 className="pagination-page">
         {currentPage} / {allPage ? allPage : currentPage}
@@ -72,6 +74,7 @@ export default function Pagination({
         }
         onClick={handleClickNextPage}
         disabled={currentPage === allPage}
+        data-testid="button-next-page"
       >{`>`}</button>
     </div>
   );
