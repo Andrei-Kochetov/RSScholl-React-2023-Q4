@@ -29,9 +29,8 @@ export default function MainPage() {
   const [linkPrevPage, setLinkPrevPage] = useState('');
   const [linkNextPage, setLinkNextPage] = useState('');
 
-  const [cardDescription, setCardDescription] = useState<ICardDescription>(
-    {} as ICardDescription
-  );
+  const [cardDescription, setCardDescription] =
+    useState<ICardDescription | null>(null);
   const [modalActive, setModalActive] = useState(false);
   const [isModalLoading, setIsModalLoading] = useState(false);
 

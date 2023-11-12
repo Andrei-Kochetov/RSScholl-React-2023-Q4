@@ -3,7 +3,7 @@ import { useContext, useEffect } from 'react';
 import Spinner from '../Spinner/Spinner';
 import Card from './Card/Card';
 import NoResultsCards from './NoResultsCards/NoResultsCards';
-import { ICardsSectionProps, ICardDescription } from '../../types/interfaces';
+import { ICardsSectionProps } from '../../types/interfaces';
 import { useSearchParams } from 'react-router-dom';
 import * as constants from '../../constants/constants';
 export default function CardsSection({
@@ -36,7 +36,7 @@ export default function CardsSection({
     } catch (error) {
       console.log(error);
       setIsModalLoading(false);
-      setCardDescription({} as ICardDescription);
+      setCardDescription(null);
     }
   };
 

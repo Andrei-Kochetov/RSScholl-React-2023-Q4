@@ -63,7 +63,7 @@ export interface IErrorBoundaryState {
 export interface IContextDefaultValue {
   searchString: string;
   cards: ICards;
-  cardDescription: ICardDescription;
+  cardDescription: ICardDescription | null;
   setIsLoading(newState: boolean): void;
   setCards(newState: ICards): void;
   setCurrentPage(newState: number): void;
@@ -71,7 +71,7 @@ export interface IContextDefaultValue {
   setLinkNextPage(newState: string): void;
   setLinkPrevPage(newState: string): void;
   setIsModalLoading(newState: boolean): void;
-  setCardDescription(newState: ICardDescription): void;
+  setCardDescription(newState: ICardDescription | null): void;
   setModalActive(newState: boolean): void;
   setSearchString(newState: string): void;
 }

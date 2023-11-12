@@ -14,7 +14,7 @@ export default function ModalCardContent({
       {isModalLoading && <Spinner />}
       {!isModalLoading && (
         <>
-          {cardDescription.id ? (
+          {cardDescription ? (
             <>
               <img src={cardDescription.image} alt="image character"></img>
               <h4 data-testid="modal-card-content">{`name: ${cardDescription.name}`}</h4>
