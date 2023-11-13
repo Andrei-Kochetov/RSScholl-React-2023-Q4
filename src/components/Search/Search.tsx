@@ -2,9 +2,9 @@ import styles from './Search.module.css';
 import searchIcon from '../../assets/search.png';
 import { Context } from '../../context/context';
 import { useContext } from 'react';
-import { ISearchProps } from '../../types/interfaces';
+import { ISearch } from '../../types/interfaces';
 
-export default function Search({ disabled }: ISearchProps) {
+export default function Search({ disabled }: ISearch) {
   const { searchString, setSearchString, setIsNewSearchCalled } =
     useContext(Context);
 

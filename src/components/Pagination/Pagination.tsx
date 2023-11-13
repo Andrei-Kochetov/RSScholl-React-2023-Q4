@@ -1,18 +1,14 @@
 import './Pagination.css';
-import { IPaginationProps } from '../../types/interfaces';
+import { IPagination } from '../../types/interfaces';
 import { Context } from '../../context/context';
 import { useContext } from 'react';
 
-export default function Pagination({ currentPage, allPage }: IPaginationProps) {
+export default function Pagination({ currentPage, allPage }: IPagination) {
   const { setClickedButtonFuturePage } = useContext(Context);
 
-  const handleClickPrevPage = () => {
-    setClickedButtonFuturePage('prev');
-  };
+  const handleClickPrevPage = () => setClickedButtonFuturePage('prev');
 
-  const handleClickNextPage = () => {
-    setClickedButtonFuturePage('next');
-  };
+  const handleClickNextPage = () => setClickedButtonFuturePage('next');
 
   return (
     <div className="pagination-section">

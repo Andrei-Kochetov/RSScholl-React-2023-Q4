@@ -6,11 +6,11 @@ import Pagination from '../../Pagination/Pagination';
 import Seacrh from '../../Search/Search';
 import { Context } from '../../../context/context';
 import { useSearchParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   ICardDescription,
-  ICards,
-  IClickedButtonFuturePage,
+  Cards,
+  ClickedButtonFuturePage,
 } from '../../../types/interfaces';
 import * as constants from '../../../constants/constants';
 
@@ -26,7 +26,7 @@ export default function MainPage() {
     searchPage && +searchPage > 0 ? searchPage : '1';
   const [currentPage, setCurrentPage] = useState(+initSearchPage);
 
-  const [cards, setCards] = useState<ICards>([]);
+  const [cards, setCards] = useState<Cards>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const [allPage, setAllPage] = useState(1);
@@ -39,13 +39,13 @@ export default function MainPage() {
   const [isModalLoading, setIsModalLoading] = useState(false);
 
   const [clickedButtonFuturePage, setClickedButtonFuturePage] =
-    useState<IClickedButtonFuturePage>('');
+    useState<ClickedButtonFuturePage>('');
 
   const [isNewSearchCalled, setIsNewSearchCalled] = useState<boolean>(false);
 
-  const deleteCardStringQuery = () => {
+  const deleteCardStringQuery = useCallback(() => {
     setSearchParams({ name: searchString, page: `${currentPage}` });
-  };
+  }, [currentPage, searchString, setSearchParams]);
 
   useEffect(() => {
     const initialSearch = async () => {
