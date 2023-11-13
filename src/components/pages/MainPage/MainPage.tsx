@@ -66,7 +66,7 @@ export default function MainPage() {
     };
 
     initialSearch();
-  }, []);
+  }, [initSearchPage, initSearchString]);
 
   return (
     <Context.Provider
