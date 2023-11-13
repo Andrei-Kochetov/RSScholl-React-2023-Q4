@@ -76,4 +76,5 @@ export interface IContextDefaultValue {
   setModalActive(newState: boolean): void;
   setSearchString(newState: string): void;
   setClickedButtonFuturePage(newState: IClickedButtonFuturePage): void;
+  setIsNewSearchCalled(newState: boolean): void;
 }

@@ -17,13 +17,13 @@ import * as constants from '../../../constants/constants';
 export default function MainPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const SearchValue: string | null = searchParams.get('name');
-  const initSearchString: string = SearchValue ? SearchValue : '';
+  const searchValue: string | null = searchParams.get('name');
+  const initSearchString: string = searchValue ? searchValue : '';
   const [searchString, setSearchString] = useState(initSearchString);
 
-  const SearchPage: string | null = searchParams.get('page');
+  const searchPage: string | null = searchParams.get('page');
   const initSearchPage: string =
-    SearchPage && +SearchPage > 0 ? SearchPage : '1';
+    searchPage && +searchPage > 0 ? searchPage : '1';
   const [currentPage, setCurrentPage] = useState(+initSearchPage);
 
   const [cards, setCards] = useState<ICards>([]);
@@ -41,6 +41,8 @@ export default function MainPage() {
   const [clickedButtonFuturePage, setClickedButtonFuturePage] =
     useState<IClickedButtonFuturePage>('');
 
+  const [isNewSearchCalled, setIsNewSearchCalled] = useState<boolean>(false);
+
   const deleteCardStringQuery = () => {
     setSearchParams({ name: searchString, page: `${currentPage}` });
   };
@@ -48,13 +50,15 @@ export default function MainPage() {
   useEffect(() => {
     const initialSearch = async () => {
       setIsLoading(true);
+      const searchStringTrimed = searchString.trim();
 
-      const futureNumberPage =
-        clickedButtonFuturePage === 'next'
-          ? currentPage + 1
-          : clickedButtonFuturePage === 'prev'
-          ? currentPage - 1
-          : currentPage;
+      const futureNumberPage = isNewSearchCalled
+        ? 1
+        : clickedButtonFuturePage === 'next'
+        ? currentPage + 1
+        : clickedButtonFuturePage === 'prev'
+        ? currentPage - 1
+        : currentPage;
 
       const futureLinkPage =
         clickedButtonFuturePage === 'next'
@@ -62,12 +66,15 @@ export default function MainPage() {
           : clickedButtonFuturePage === 'prev'
           ? linkPrevPage
           : `${constants.BASE_URL}${
-              initSearchString
-                ? `?name=${searchString}&page=${currentPage}`
+              searchString
+                ? `?name=${searchStringTrimed}&page=${currentPage}`
                 : `?page=${currentPage}`
             }`;
 
-      setSearchParams({ name: searchString, page: `${futureNumberPage}` });
+      setSearchParams({
+        name: searchStringTrimed,
+        page: `${futureNumberPage}`,
+      });
 
       try {
         const response = await fetch(futureLinkPage);
@@ -79,16 +86,18 @@ export default function MainPage() {
         setAllPage(data.info.pages);
         setLinkPrevPage(data.info.prev);
         setLinkNextPage(data.info.next);
-        setClickedButtonFuturePage('');
+        setSearchString(searchStringTrimed);
       } catch (error) {
         console.log(error);
         setCards([]);
         setIsLoading(false);
       }
+      setClickedButtonFuturePage('');
+      setIsNewSearchCalled(false);
     };
 
     initialSearch();
-  }, [clickedButtonFuturePage]);
+  }, [clickedButtonFuturePage, isNewSearchCalled]);
 
   return (
     <Context.Provider
@@ -107,6 +116,7 @@ export default function MainPage() {
         setModalActive,
         setSearchString,
         setClickedButtonFuturePage,
+        setIsNewSearchCalled,
       }}
     >
       <Seacrh disabled={isLoading}></Seacrh>
