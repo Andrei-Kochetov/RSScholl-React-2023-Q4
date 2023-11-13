@@ -7,7 +7,11 @@ import Seacrh from '../../Search/Search';
 import { Context } from '../../../context/context';
 import { useSearchParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { ICardDescription, ICards } from '../../../types/interfaces';
+import {
+  ICardDescription,
+  ICards,
+  IClickedButtonFuturePage,
+} from '../../../types/interfaces';
 import * as constants from '../../../constants/constants';
 
 export default function MainPage() {
@@ -34,6 +38,9 @@ export default function MainPage() {
   const [modalActive, setModalActive] = useState(false);
   const [isModalLoading, setIsModalLoading] = useState(false);
 
+  const [clickedButtonFuturePage, setClickedButtonFuturePage] =
+    useState<IClickedButtonFuturePage>('');
+
   const deleteCardStringQuery = () => {
     setSearchParams({ name: searchString, page: `${currentPage}` });
   };
@@ -41,23 +48,38 @@ export default function MainPage() {
   useEffect(() => {
     const initialSearch = async () => {
       setIsLoading(true);
-      setSearchString(initSearchString);
+
+      const futureNumberPage =
+        clickedButtonFuturePage === 'next'
+          ? currentPage + 1
+          : clickedButtonFuturePage === 'prev'
+          ? currentPage - 1
+          : currentPage;
+
+      const futureLinkPage =
+        clickedButtonFuturePage === 'next'
+          ? linkNextPage
+          : clickedButtonFuturePage === 'prev'
+          ? linkPrevPage
+          : `${constants.BASE_URL}${
+              initSearchString
+                ? `?name=${searchString}&page=${currentPage}`
+                : `?page=${currentPage}`
+            }`;
+
+      setSearchParams({ name: searchString, page: `${futureNumberPage}` });
+
       try {
-        const response = await fetch(
-          `${constants.BASE_URL}${
-            initSearchString
-              ? `?name=${initSearchString}&page=${initSearchPage}`
-              : `?page=${initSearchPage}`
-          }`
-        );
+        const response = await fetch(futureLinkPage);
         const data = await response.json();
 
         setCards(data.results);
         setIsLoading(false);
-        setCurrentPage(+initSearchPage);
+        setCurrentPage(+futureNumberPage);
         setAllPage(data.info.pages);
         setLinkPrevPage(data.info.prev);
         setLinkNextPage(data.info.next);
+        setClickedButtonFuturePage('');
       } catch (error) {
         console.log(error);
         setCards([]);
@@ -66,7 +88,7 @@ export default function MainPage() {
     };
 
     initialSearch();
-  }, []);
+  }, [clickedButtonFuturePage]);
 
   return (
     <Context.Provider
@@ -84,6 +106,7 @@ export default function MainPage() {
         setCardDescription,
         setModalActive,
         setSearchString,
+        setClickedButtonFuturePage,
       }}
     >
       <Seacrh disabled={isLoading}></Seacrh>

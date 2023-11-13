@@ -1,6 +1,7 @@
 import { ErrorInfo } from 'react';
 
 export type ICards = Record<string, string>[];
+export type IClickedButtonFuturePage = 'prev' | 'next' | '';
 
 export interface ICardProps {
   img: string;
@@ -74,4 +75,5 @@ export interface IContextDefaultValue {
   setCardDescription(newState: ICardDescription | null): void;
   setModalActive(newState: boolean): void;
   setSearchString(newState: string): void;
+  setClickedButtonFuturePage(newState: IClickedButtonFuturePage): void;
 }
