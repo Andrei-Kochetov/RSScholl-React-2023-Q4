@@ -45,10 +45,12 @@ export interface IPagination {
   allPage: number | null;
   linkPrevPage: string;
   linkNextPage: string;
+  doChangeForUseEffect(): void;
 }
 
 export interface ISearch {
   disabled: boolean;
+  doChangeForUseEffect(): void;
 }
 
 export interface IErrorBoundary {

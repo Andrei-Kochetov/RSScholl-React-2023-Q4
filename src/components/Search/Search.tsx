@@ -4,16 +4,20 @@ import { Context } from '../../context/context';
 import { useContext } from 'react';
 import { ISearch } from '../../types/interfaces';
 
-export default function Search({ disabled }: ISearch) {
+export default function Search({ disabled, doChangeForUseEffect }: ISearch) {
   const { searchString, setSearchString, setIsNewSearchCalled } =
     useContext(Context);
 
   function handlerKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
-    return event.code === 'Enter' && setIsNewSearchCalled(true);
+    if (event.code === 'Enter') {
+      setIsNewSearchCalled(true);
+      doChangeForUseEffect();
+    }
   }
 
   function handlerClick() {
     setIsNewSearchCalled(true);
+    doChangeForUseEffect();
   }
 
   function handlerChange(event: React.ChangeEvent<HTMLInputElement>) {

@@ -41,11 +41,18 @@ export default function MainPage() {
   const [clickedButtonFuturePage, setClickedButtonFuturePage] =
     useState<ClickedButtonFuturePage>('');
 
-  const [isNewSearchCalled, setIsNewSearchCalled] = useState<boolean>(false);
+  const [isNewSearchCalled, setIsNewSearchCalled] = useState(false);
+
+  const [toggleChangeForUseEffect, setIsToggleChangeForUseEffect] =
+    useState(false);
 
   const deleteCardStringQuery = useCallback(() => {
     setSearchParams({ name: searchString, page: `${currentPage}` });
   }, [currentPage, searchString, setSearchParams]);
+
+  const doChangeForUseEffect = () => {
+    setIsToggleChangeForUseEffect(!toggleChangeForUseEffect);
+  };
 
   useEffect(() => {
     const initialSearch = async () => {
@@ -97,7 +104,7 @@ export default function MainPage() {
     };
 
     initialSearch();
-  }, [clickedButtonFuturePage, isNewSearchCalled]);
+  }, [toggleChangeForUseEffect]);
 
   return (
     <Context.Provider
@@ -119,7 +126,10 @@ export default function MainPage() {
         setIsNewSearchCalled,
       }}
     >
-      <Seacrh disabled={isLoading}></Seacrh>
+      <Seacrh
+        disabled={isLoading}
+        doChangeForUseEffect={doChangeForUseEffect}
+      ></Seacrh>
       <ErrorButton />
       <CardsSection isLoading={isLoading} currentPage={currentPage} />
       {!isLoading && Boolean(cards.length) && (
@@ -128,6 +138,7 @@ export default function MainPage() {
           currentPage={currentPage}
           linkPrevPage={linkPrevPage}
           linkNextPage={linkNextPage}
+          doChangeForUseEffect={doChangeForUseEffect}
         />
       )}
       <ModalCard
