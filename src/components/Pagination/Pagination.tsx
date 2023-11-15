@@ -1,15 +1,18 @@
 import './Pagination.css';
-import { IPagination } from '../../types/interfaces';
-import { Context } from '../../context/context';
-import { useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { changeCurrentPage } from '../../store/mainPageSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
-export default function Pagination({ currentPage, allPage }: IPagination) {
-  const { setCurrentPage, searchString } = useContext(Context);
+export default function Pagination() {
   const [, setSearchParams] = useSearchParams();
+  const dispatch = useAppDispatch();
+
+  const searchString = useAppSelector((state) => state.mainPage.searchString);
+  const allPage = useAppSelector((state) => state.mainPage.allPage);
+  const currentPage = useAppSelector((state) => state.mainPage.currentPage);
 
   const handleClickPrevPage = () => {
-    setCurrentPage(currentPage - 1);
+    dispatch(changeCurrentPage(currentPage - 1));
     setSearchParams({
       name: searchString,
       page: `${currentPage - 1}`,
@@ -17,7 +20,7 @@ export default function Pagination({ currentPage, allPage }: IPagination) {
   };
 
   const handleClickNextPage = () => {
-    setCurrentPage(currentPage + 1);
+    dispatch(changeCurrentPage(currentPage + 1));
     setSearchParams({
       name: searchString,
       page: `${currentPage + 1}`,
