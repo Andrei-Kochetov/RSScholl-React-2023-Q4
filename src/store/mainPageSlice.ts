@@ -4,7 +4,7 @@ import { Cards, ICardDescription } from '../types/interfaces';
 
 interface IMainPageState {
   cards: Cards;
-  cardDescription: ICardDescription | null;
+  cardDescription: ICardDescription | undefined;
   isCardsLoading: boolean;
   isModalActive: boolean;
   isModalLoading: boolean;
@@ -15,7 +15,7 @@ interface IMainPageState {
 
 const initialState: IMainPageState = {
   cards: [],
-  cardDescription: null,
+  cardDescription: undefined,
   isCardsLoading: true,
   isModalActive: false,
   isModalLoading: false,
@@ -33,7 +33,7 @@ export const mainPageSlice = createSlice({
     },
     changeCardDescription: (
       state,
-      action: PayloadAction<ICardDescription | null>
+      action: PayloadAction<ICardDescription | undefined>
     ) => {
       state.cardDescription = action.payload;
     },
