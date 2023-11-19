@@ -4,6 +4,8 @@ import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
 import MainPage from '../pages/MainPage/MainPage';
 import Search from './Search';
+import { Provider } from 'react-redux/es/exports';
+import { store } from '../../store/store';
 
 const renderMainPage = () => {
   return (
@@ -15,9 +17,9 @@ const renderMainPage = () => {
 const renderSearch = () => {
   return (
     <BrowserRouter>
-      <>
+      <Provider store={store}>
         <Search disabled={false} />
-      </>
+      </Provider>
     </BrowserRouter>
   );
 };

@@ -3,6 +3,8 @@ import { fireEvent, render, renderHook, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ModalCard from './ModalCard';
 import { useState } from 'react';
+import { Provider } from 'react-redux/es/exports';
+import { store } from '../../store/store';
 
 const mockFn = vi.fn(() => true);
 
@@ -10,9 +12,9 @@ const { result } = renderHook(() => useState(true));
 
 const renderModalCard = () => {
   return (
-    <>
+    <Provider store={store}>
       <ModalCard deleteCardStringQuery={mockFn} />
-    </>
+    </Provider>
   );
 };
 

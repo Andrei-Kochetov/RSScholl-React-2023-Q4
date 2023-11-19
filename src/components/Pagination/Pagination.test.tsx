@@ -3,13 +3,15 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
 import Pagination from './Pagination';
+import { Provider } from 'react-redux/es/exports';
+import { store } from '../../store/store';
 
 const renderPagination = (currentPage: number) => {
   return (
     <BrowserRouter>
-      <>
+      <Provider store={store}>
         <Pagination currentPage={currentPage} />
-      </>
+      </Provider>
     </BrowserRouter>
   );
 };

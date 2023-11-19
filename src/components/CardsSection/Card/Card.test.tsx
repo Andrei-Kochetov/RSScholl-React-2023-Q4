@@ -5,6 +5,8 @@ import Card from './Card';
 import { mockCards } from '../../../mocks/mockData';
 import ModalCard from '../../ModalCard/ModalCard';
 import { useState } from 'react';
+import { Provider } from 'react-redux/es/exports';
+import { store } from '../../../store/store';
 
 export function mockGetCardDescription() {
   fetch(`https://rickandmortyapi.com/api/character/1`).then((response) => {
@@ -23,7 +25,7 @@ const { result } = renderHook(() => useState(false));
 
 const renderCardAndModalCard = () => {
   return (
-    <>
+    <Provider store={store}>
       <Card
         img={mockCards[0].image}
         name={mockCards[0].name}
@@ -35,7 +37,7 @@ const renderCardAndModalCard = () => {
         getCardModalDescription={onClick}
       ></Card>
       <ModalCard deleteCardStringQuery={mockFn} />
-    </>
+    </Provider>
   );
 };
 

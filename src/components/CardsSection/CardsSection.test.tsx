@@ -4,13 +4,15 @@ import '@testing-library/jest-dom';
 import CardsSection from './CardsSection';
 import { mockCards } from '../../mocks/mockData';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux/es/exports';
+import { store } from '../../store/store';
 
 const renderCardsSection = () => {
   return (
     <BrowserRouter>
-      <>
+      <Provider store={store}>
         <CardsSection />
-      </>
+      </Provider>
     </BrowserRouter>
   );
 };
