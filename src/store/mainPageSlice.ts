@@ -10,7 +10,6 @@ interface IMainPageState {
   isModalLoading: boolean;
   searchString: string;
   allPage: number;
-  cardDescriptionId: string;
 }
 
 const initialState: IMainPageState = {
@@ -21,7 +20,6 @@ const initialState: IMainPageState = {
   isModalLoading: false,
   searchString: '',
   allPage: 1,
-  cardDescriptionId: '',
 };
 
 export const mainPageSlice = createSlice({
@@ -49,9 +47,6 @@ export const mainPageSlice = createSlice({
     changeSearchString: (state, action: PayloadAction<string>) => {
       state.searchString = action.payload;
     },
-    changeCardDescriptionId: (state, action: PayloadAction<string>) => {
-      state.cardDescriptionId = action.payload;
-    },
     changeAllPage: (state, action: PayloadAction<number>) => {
       state.allPage = action.payload;
     },
@@ -66,7 +61,6 @@ export const {
   changeIsModalActive,
   changeSearchString,
   changeAllPage,
-  changeCardDescriptionId,
 } = mainPageSlice.actions;
 
 export default mainPageSlice.reducer;

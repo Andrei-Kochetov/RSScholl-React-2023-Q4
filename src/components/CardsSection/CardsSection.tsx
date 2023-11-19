@@ -43,14 +43,11 @@ export default function CardsSection() {
   };
 
   useEffect(() => {
-    const initialGetCardDescription = () => {
-      if (initSearchCard) {
-        getCardModalDescription(initSearchCard);
-      } else {
-        dispatch(changeIsModalActive(false));
-      }
-    };
-    initialGetCardDescription();
+    if (initSearchCard) {
+      getCardModalDescription(initSearchCard);
+    } else {
+      dispatch(changeIsModalActive(false));
+    }
   }, [initSearchCard]);
 
   return (
