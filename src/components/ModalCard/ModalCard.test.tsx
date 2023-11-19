@@ -1,50 +1,18 @@
 import { describe, expect, test, vi } from 'vitest';
-import {
-  act,
-  fireEvent,
-  render,
-  renderHook,
-  screen,
-} from '@testing-library/react';
+import { fireEvent, render, renderHook, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { mockCardDescription, mockSearchString } from '../../mocks/mockData';
-import { Context } from '../../context/context';
 import ModalCard from './ModalCard';
 import { useState } from 'react';
 
 const mockFn = vi.fn(() => true);
 
 const { result } = renderHook(() => useState(true));
-const [modalActive, setMockModalActive] = result.current;
 
-const renderModalCard = (isModalLoading: boolean = false) => {
+const renderModalCard = () => {
   return (
-    <Context.Provider
-      value={{
-        cards: [],
-        searchString: mockSearchString,
-        cardDescription: mockCardDescription,
-        setIsLoading: mockFn,
-        setCards: mockFn,
-        setCurrentPage: mockFn,
-        setAllPage: mockFn,
-        setLinkNextPage: mockFn,
-        setLinkPrevPage: mockFn,
-        setIsModalLoading: mockFn,
-        setCardDescription: mockFn,
-        setModalActive: (newState: boolean) =>
-          act(() => setMockModalActive(newState)),
-        setSearchString: mockFn,
-        setClickedButtonFuturePage: mockFn,
-        setIsNewSearchCalled: mockFn,
-      }}
-    >
-      <ModalCard
-        modalActive={modalActive}
-        isModalLoading={isModalLoading}
-        deleteCardStringQuery={mockFn}
-      />
-    </Context.Provider>
+    <>
+      <ModalCard deleteCardStringQuery={mockFn} />
+    </>
   );
 };
 
@@ -58,7 +26,7 @@ describe('The detailed card:', () => {
   });
 
   test('loading indicator is displayed while fetching data', () => {
-    render(renderModalCard(true));
+    render(renderModalCard());
 
     expect(screen.getByTestId('spinner')).toBeInTheDocument();
   });

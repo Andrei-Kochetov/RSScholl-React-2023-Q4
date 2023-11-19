@@ -4,14 +4,6 @@ import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
 import MainPage from '../pages/MainPage/MainPage';
 import Search from './Search';
-import {
-  mockCardDescription,
-  mockCards,
-  mockSearchString,
-} from '../../mocks/mockData';
-import { Context } from '../../context/context';
-
-const mockFn = vi.fn();
 
 const renderMainPage = () => {
   return (
@@ -23,27 +15,9 @@ const renderMainPage = () => {
 const renderSearch = () => {
   return (
     <BrowserRouter>
-      <Context.Provider
-        value={{
-          cards: mockCards,
-          searchString: mockSearchString,
-          cardDescription: mockCardDescription,
-          setIsLoading: mockFn,
-          setCards: mockFn,
-          setCurrentPage: mockFn,
-          setAllPage: mockFn,
-          setLinkNextPage: mockFn,
-          setLinkPrevPage: mockFn,
-          setIsModalLoading: mockFn,
-          setCardDescription: mockFn,
-          setModalActive: mockFn,
-          setSearchString: mockFn,
-          setClickedButtonFuturePage: mockFn,
-          setIsNewSearchCalled: mockFn,
-        }}
-      >
+      <>
         <Search disabled={false} />
-      </Context.Provider>
+      </>
     </BrowserRouter>
   );
 };
