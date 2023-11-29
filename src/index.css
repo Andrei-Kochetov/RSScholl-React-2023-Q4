@@ -64,21 +64,6 @@ button {
   transition: border-color 0.25s;
 }
 
-.disabled-button {
-  background-color: silver;
-}
-
-.disabled-button:hover {
-  scale: 1;
-}
-
-.disabled-button:active {
-  background-color: silver;
-}
-
-.hide {
-  display: none;
-}
 
 @media (prefers-color-scheme: light) {
   :root {
