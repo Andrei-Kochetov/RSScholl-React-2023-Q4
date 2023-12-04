@@ -1,14 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import MainPage from '../pages/MainPage/MainPage';
-import Error404 from '../pages/Error404/Error404';
+import UncontrolFormPage from '../pages/UncontrolFormPage/UncontrolFormPage';
+import ReactHookFormPage from '../pages/ReactHookFormPage/ReactHookFormPage';
 
 export default function App() {
   return (
     <ErrorBoundary>
       <Routes>
         <Route path="/" element={<MainPage />}></Route>
-        <Route path="/*" element={<Error404 />}></Route>
+        <Route path="/uncontrol-form" element={<UncontrolFormPage />}></Route>
+        <Route path="/react-hook-form" element={<ReactHookFormPage />}></Route>
       </Routes>
     </ErrorBoundary>
   );
